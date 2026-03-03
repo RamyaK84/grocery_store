@@ -12,28 +12,24 @@ from forms import RegisterForm, LoginForm, ProductForm
 app = Flask(__name__)
 app.config.from_object(Config)
 
-app.config["UPLOAD_FOLDER"] = "static/uploads"
-app.config["ALLOWED_EXTENSIONS"] = {"png", "jpg", "jpeg", "gif"}
-os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
+# Ensure upload folder exists
+os.makedirs(app.config.get("UPLOAD_FOLDER", "static/uploads"), exist_ok=True)
 
-db.init_app(app)
+# -------------------- DATABASE INIT --------------------
+db.init_app(app)  # Initialize db with the Flask app
 
+# -------------------- LOGIN MANAGER --------------------
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 login_manager.login_message_category = "warning"
 
-# -------------------- LOGIN MANAGER --------------------
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# -------------------- DATABASE INIT --------------------
-with app.app_context():
-    db.create_all()
-
 # -------------------- HELPERS --------------------
 def allowed_file(filename):
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in app.config["ALLOWED_EXTENSIONS"]
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in app.config.get("ALLOWED_EXTENSIONS", {"png","jpg","jpeg","gif"})
 
 def admin_required():
     if not current_user.is_authenticated or not getattr(current_user, "is_admin", False):
@@ -47,7 +43,7 @@ def index():
     featured_products = Product.query.limit(4).all()
     return render_template("index.html", products=featured_products)
 
-# -------------------- AUTH --------------------
+# ---------- AUTH ----------
 @app.route("/register", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
@@ -82,7 +78,7 @@ def logout():
     flash("Logged out successfully.", "info")
     return redirect(url_for("index"))
 
-# -------------------- PRODUCTS --------------------
+# ---------- PRODUCTS ----------
 @app.route("/products")
 def products():
     all_products = Product.query.all()
@@ -93,7 +89,7 @@ def product_detail(product_id):
     product = Product.query.get_or_404(product_id)
     return render_template("product_detail.html", product=product)
 
-# -------------------- CART --------------------
+# ---------- CART ----------
 @app.route("/add_to_cart/<int:product_id>")
 def add_to_cart(product_id):
     cart = session.get("cart", {})
@@ -155,7 +151,7 @@ def checkout():
     flash("Order placed successfully!", "success")
     return redirect(url_for("products"))
 
-# -------------------- ADMIN --------------------
+# ---------- ADMIN ----------
 @app.route("/admin")
 @login_required
 def admin_dashboard():
@@ -189,6 +185,8 @@ def add_product():
     return render_template("admin/add_product.html", form=form)
 
 # -------------------- ENTRY POINT --------------------
-# For Gunicorn deployment, just expose `app` (no need to run it here)
-# if __name__ == "__main__":
-#     app.run(debug=True)
+if __name__ == "__main__":
+    # Run locally with Flask’s built-in server on Windows
+    with app.app_context():
+        db.create_all()  # Create tables if they don’t exist
+    app.run(debug=True, host="127.0.0.1", port=5000)
