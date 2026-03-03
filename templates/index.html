@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- ================= HERO SLIDER ================= -->
+<section class="hero-slider">
+
+    <div class="slides">
+        <div class="slide active">
+            <img src="{{ url_for('static', filename='images/banner1.jpg') }}" alt="Banner 1">
+        </div>
+
+        <div class="slide">
+            <img src="{{ url_for('static', filename='images/banner2.jpg') }}" alt="Banner 2">
+        </div>
+
+        <div class="slide">
+            <img src="{{ url_for('static', filename='images/banner3.jpg') }}" alt="Banner 3">
+        </div>
+    </div>
+
+    <div class="hero-text">
+        <h1>Fresh Groceries Delivered Fast</h1>
+        <p>Best Quality • Fresh Daily • Affordable Prices</p>
+        <a href="{{ url_for('products') }}" class="btn-cart">Shop Now</a>
+    </div>
+
+</section>
+
+
+<!-- ================= CATEGORIES ================= -->
+<section class="categories">
+    <h2>Shop By Category</h2>
+
+    <div class="category-grid">
+
+        <div class="category-card">
+            <img src="{{ url_for('static', filename='images/fruits.jpg') }}" alt="Fruits">
+            <h3>Fruits</h3>
+        </div>
+
+        <div class="category-card">
+            <img src="{{ url_for('static', filename='images/vegetables.jpg') }}" alt="Vegetables">
+            <h3>Vegetables</h3>
+        </div>
+
+        <div class="category-card">
+            <img src="{{ url_for('static', filename='images/dairy.jpg') }}" alt="Dairy">
+            <h3>Dairy</h3>
+        </div>
+
+        <div class="category-card">
+            <img src="{{ url_for('static', filename='images/snacks.jpg') }}" alt="Snacks">
+            <h3>Snacks</h3>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ================= OFFER BANNER ================= -->
+<section class="offer-banner">
+    <div class="offer-content">
+        <h2>🔥 Special Weekend Offer</h2>
+        <p>Get Up To 30% OFF On Selected Products</p>
+        <a href="{{ url_for('products') }}" class="btn-cart">Shop Now</a>
+    </div>
+</section>
+
+
+<!-- ================= FEATURED PRODUCTS ================= -->
+<section class="product-section">
+    <h2>Featured Products</h2>
+
+    <div class="product-container">
+
+        {% for product in products %}
+        <div class="product-card">
+
+            {% if product.image %}
+                <img src="{{ url_for('static', filename='uploads/' + product.image) }}"
+                     class="product-img"
+                     alt="{{ product.name }}">
+            {% else %}
+                <img src="{{ url_for('static', filename='images/default.png') }}"
+                     class="product-img"
+                     alt="Default Image">
+            {% endif %}
+
+            <h3>{{ product.name }}</h3>
+            <p class="price">₹ {{ product.price }}</p>
+
+            <div class="product-buttons">
+                <a href="{{ url_for('product_detail', product_id=product.id) }}"
+                   class="btn-outline">View</a>
+
+                <a href="{{ url_for('add_to_cart', product_id=product.id) }}"
+                   class="btn-cart">Add to Cart</a>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+</section>
+
+{% endblock %}

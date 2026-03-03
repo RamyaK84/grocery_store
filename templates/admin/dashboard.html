@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Admin Dashboard</h2>
+
+<a href="{{ url_for('add_product') }}" class="btn">Add New Product</a>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+    </tr>
+<td>
+    {% if product.image %}
+    <img src="{{ url_for('static', filename='uploads/' + product.image) }}" width="60">
+    {% else %}
+    No Image
+    {% endif %}
+</td>
+
+    {% for product in products %}
+    <tr>
+        <td>{{ product.name }}</td>
+        <td>₹ {{ product.price }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

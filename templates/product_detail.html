@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="product-detail-section" style="padding:60px 80px; background:#f5f7fa;">
+
+  <div class="product-detail-container" style="display:flex; flex-wrap:wrap; gap:50px; justify-content:center; align-items:flex-start;">
+
+    <!-- PRODUCT IMAGE -->
+    <div class="detail-image" style="flex:1 1 400px; max-width:500px;">
+      {% if product.image %}
+        <img src="{{ url_for('static', filename='uploads/' + product.image) }}"
+             alt="{{ product.name }}"
+             style="width:100%; border-radius:15px; object-fit:cover; box-shadow:0 8px 25px rgba(0,0,0,0.1);">
+      {% else %}
+        <img src="{{ url_for('static', filename='images/default.png') }}"
+             alt="No Image"
+             style="width:100%; border-radius:15px; object-fit:cover; box-shadow:0 8px 25px rgba(0,0,0,0.1);">
+      {% endif %}
+    </div>
+
+    <!-- PRODUCT INFO -->
+    <div class="detail-info" style="flex:1 1 400px; max-width:500px;">
+      
+      <h1 style="font-size:36px; color:#1e7d32; margin-bottom:15px;">{{ product.name }}</h1>
+
+      <!-- Ratings -->
+      <div class="product-rating" style="margin-bottom:15px; font-size:18px; color:#ffb400;">
+        {% for i in range(1, 6) %}
+          {% if i <= product.rating %}
+            ★
+          {% else %}
+            ☆
+          {% endif %}
+        {% endfor %}
+        <span style="color:#555; font-size:16px;">({{ product.reviews_count }} reviews)</span>
+      </div>
+
+      <!-- Availability -->
+      <p style="font-size:16px; margin-bottom:20px;">
+        <strong>Availability:</strong>
+        {% if product.stock > 0 %}
+          <span style="color:#1e7d32;">In Stock</span>
+        {% else %}
+          <span style="color:red;">Out of Stock</span>
+        {% endif %}
+      </p>
+
+      <!-- Description -->
+      <p class="detail-description" style="font-size:18px; color:#555; margin-bottom:25px; line-height:1.6;">
+        {{ product.description }}
+      </p>
+
+      <!-- Price -->
+      <h2 class="price" style="font-size:28px; color:#1e7d32; margin-bottom:25px;">₹ {{ product.price }}</h2>
+
+      <!-- Quantity Selector -->
+      <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="POST" style="display:flex; align-items:center; gap:15px; margin-bottom:25px;">
+        <label for="quantity" style="font-weight:500;">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ product.stock }}" style="width:60px; padding:5px; border-radius:5px; border:1px solid #ccc;">
+        {% if product.stock > 0 %}
+          <button type="submit" class="btn-cart" style="padding:12px 25px; border-radius:30px; background:#1e7d32; color:#fff; border:none; cursor:pointer; transition:0.3s;">
+            Add to Cart
+          </button>
+        {% else %}
+          <button type="button" class="btn-disabled" style="padding:12px 25px; border-radius:30px; background:#ccc; color:#fff; border:none; cursor:not-allowed;">
+            Out of Stock
+          </button>
+        {% endif %}
+      </form>
+
+      <!-- Action Buttons -->
+      <div class="detail-buttons" style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:25px;">
+        <a href="{{ url_for('products') }}"
+           class="btn-primary"
+           style="padding:12px 25px; border-radius:30px; background:#ffeb3b; color:#1e7d32; text-decoration:none; font-weight:500; transition:0.3s;">
+           Back to Products
+        </a>
+      </div>
+
+      <!-- Share Buttons -->
+      <div class="share-buttons" style="display:flex; gap:15px; margin-top:10px;">
+        <a href="#" style="text-decoration:none; color:#3b5998; font-weight:500;">Share on Facebook</a>
+        <a href="#" style="text-decoration:none; color:#00acee; font-weight:500;">Share on Twitter</a>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+{% endblock %}

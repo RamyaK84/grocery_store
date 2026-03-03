@@ -1,0 +1,311 @@
+/* =================================
+   GLOBAL RESET
+================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* =================================
+   NAVBAR
+================================= */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 70px;
+    background: #1e7d32;
+    color: #fff;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #ffeb3b;
+}
+
+/* =================================
+   HERO SECTION
+================================= */
+.hero-slider {
+    position: relative;
+    width: 100%;
+    height: 75vh;
+    min-height: 500px;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.slide.active {
+    display: block;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-slider::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+}
+
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: center;
+    z-index: 2;
+}
+
+.hero-text h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.hero-text p {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+/* =================================
+   BUTTONS
+================================= */
+.btn-primary,
+.btn-cart {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #1e7d32;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-cart:hover {
+    background: #145a22;
+}
+
+.btn-outline {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid #1e7d32;
+    color: #1e7d32;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: 0.3s ease;
+}
+
+.btn-outline:hover {
+    background: #1e7d32;
+    color: #fff;
+}
+
+/* =================================
+   CATEGORIES
+================================= */
+.categories {
+    padding: 70px 80px;
+    text-align: center;
+}
+
+.categories h2 {
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: #1e7d32;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+.category-card {
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-6px);
+}
+
+.category-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.category-card h3 {
+    padding: 15px;
+}
+
+/* =================================
+   OFFER BANNER
+================================= */
+.offer-banner {
+    height: 550px;
+    background: url("../images/banner2.jpg") center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 80px 0;
+    position: relative;
+    text-align: center;
+    color: #fff;
+}
+
+.offer-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+}
+
+.offer-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* =================================
+   PRODUCTS (MULTI-COLUMN GRID)
+================================= */
+.product-section {
+    padding: 70px 80px;
+}
+
+.product-section h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 32px;
+    color: #1e7d32;
+}
+
+/* Grid container for multiple products per row */
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+}
+
+/* Product card styling */
+.product-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+}
+
+.product-img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 14px;
+    margin-bottom: 15px;
+}
+
+.product-info h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1e7d32;
+    margin-bottom: 12px;
+}
+
+.product-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* =================================
+   FOOTER
+================================= */
+footer {
+    margin-top: 80px;
+    padding: 25px;
+    text-align: center;
+    background: #1e7d32;
+    color: #fff;
+}
+
+/* =================================
+   RESPONSIVE
+================================= */
+@media (max-width: 768px) {
+
+    .navbar {
+        padding: 15px 25px;
+    }
+
+    .hero-slider {
+        height: 60vh;
+        min-height: 350px;
+    }
+
+    .hero-text h1 {
+        font-size: 28px;
+    }
+
+    .hero-text p {
+        font-size: 16px;
+    }
+
+    .categories,
+    .product-section {
+        padding: 40px 20px;
+    }
+
+    .product-buttons {
+        flex-direction: column;
+    }
+}

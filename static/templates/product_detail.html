@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="product-detail-section">
+
+    <div class="product-detail-container">
+
+        <!-- PRODUCT IMAGE -->
+        <div class="detail-image">
+            {% if product.image %}
+                <img src="{{ url_for('static', filename='uploads/' + product.image) }}"
+                     alt="{{ product.name }}"
+                     class="detail-img">
+            {% else %}
+                <img src="{{ url_for('static', filename='images/default.png') }}"
+                     alt="No Image"
+                     class="detail-img">
+            {% endif %}
+        </div>
+
+        <!-- PRODUCT INFO -->
+        <div class="detail-info">
+            <h2>{{ product.name }}</h2>
+            <p class="detail-description">{{ product.description }}</p>
+            <h3 class="price">₹ {{ product.price }}</h3>
+
+            <a href="{{ url_for('add_to_cart', product_id=product.id) }}"
+               class="btn-cart">
+                Add to Cart
+            </a>
+
+            <a href="{{ url_for('products') }}"
+               class="btn-primary">
+                Back to Products
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OliveMart Grocery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script defer src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/slider.js') }}"></script>
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo">🌿 OliveMart</div>
+
+    <nav>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('products') }}">Shop</a></li>
+            <li>
+                <a href="{{ url_for('cart') }}">
+                    Cart 🛒 <span id="cart-count">{{ session.get('cart', {})|length }}</span>
+                </a>
+            </li>
+            <li><a href="#">Contact</a></li>
+
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+
+{% block content %}{% endblock %}
+
+<footer>
+    <p>© 2026 OliveMart | Fresh & Organic</p>
+</footer>
+
+</body>
+</html>

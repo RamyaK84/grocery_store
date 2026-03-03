@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OliveMart Grocery</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-pap7Vf+3k5vWQn8B5KjN5KiPP2J8tI+TqP9pM5N+Lq5HZkT6dGqx3yJ3RwrKUM0ZsYhH0TKa8yO62Xuz+jOgkg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- JS -->
+    <script defer src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/slider.js') }}"></script>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+    <div class="logo">🌿 OliveMart</div>
+
+    <nav>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('products') }}">Shop</a></li>
+
+            <!-- Cart with dynamic count -->
+            <li>
+                <a href="{{ url_for('cart') }}">
+                    <i class="fa fa-shopping-cart"></i> Cart 
+                    <span class="cart-count">
+                        {% if session.get('cart') %}
+                            {{ session['cart']|length }}
+                        {% else %}
+                            0
+                        {% endif %}
+                    </span>
+                </a>
+            </li>
+
+           <li><a href="#">Contact</a></li>
+            <!-- Login / Logout -->
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('logout') }}"><i class="fa fa-user"></i> Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}"><i class="fa fa-user"></i> Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+
+<!-- ================= CONTENT ================= -->
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+    <p>© 2026 OliveMart | Fresh & Organic</p>
+</footer>
+
+</body>
+</html>

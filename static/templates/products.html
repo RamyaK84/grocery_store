@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="product-section">
+
+    <h2 class="page-title">All Products</h2>
+
+    <div class="product-container">
+        {% for product in products %}
+        <div class="product-card">
+
+            <!-- PRODUCT IMAGE -->
+            {% if product.image %}
+                <img src="{{ url_for('static', filename='uploads/' + product.image) }}"
+                     alt="{{ product.name }}"
+                     class="product-img">
+            {% else %}
+                <img src="{{ url_for('static', filename='images/default.png') }}"
+                     alt="No Image"
+                     class="product-img">
+            {% endif %}
+
+            <!-- PRODUCT INFO -->
+            <h3>{{ product.name }}</h3>
+            <p class="description">{{ product.description }}</p>
+            <p class="price">₹ {{ product.price }}</p>
+
+            <!-- BUTTONS -->
+            <div class="product-buttons">
+                <a href="{{ url_for('product_detail', product_id=product.id) }}"
+                   class="btn-primary">
+                    View Details
+                </a>
+
+                <a href="{{ url_for('add_to_cart', product_id=product.id) }}"
+                   class="btn-cart">
+                    Add to Cart
+                </a>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+</section>
+
+{% endblock %}

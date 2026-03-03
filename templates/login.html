@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<!-- Include Font Awesome CDN for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+      integrity="sha512-pap7Vf+3k5vWQn8B5KjN5KiPP2J8tI+TqP9pM5N+Lq5HZkT6dGqx3yJ3RwrKUM0ZsYhH0TKa8yO62Xuz+jOgkg==" 
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+/* Background gradient inspired by fresh vegetables */
+body {
+    background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Centered login card */
+.login-container {
+    max-width: 400px;
+    margin: 80px auto;
+    background: #ffffffdd;
+    padding: 35px 30px;
+    border-radius: 20px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Leaf accent top right */
+.login-container::after {
+    content: "🌿";
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 80px;
+    opacity: 0.1;
+}
+
+/* Heading */
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #27ae60;
+    font-weight: bold;
+}
+
+/* Input groups with icons */
+.input-group {
+    position: relative;
+    margin-top: 15px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #27ae60;
+    font-size: 18px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    margin-bottom: 10px;
+    border: 1px solid #b2bec3;
+    border-radius: 10px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #27ae60;
+    box-shadow: 0 0 6px #27ae60;
+}
+
+/* Submit button */
+.btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #2ecc71;
+}
+
+/* Footer with register link */
+.login-footer {
+    text-align: center;
+    margin-top: 18px;
+    color: #34495e;
+    font-size: 14px;
+}
+
+.login-footer a {
+    color: #27ae60;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive tweaks */
+@media screen and (max-width: 450px) {
+    .login-container {
+        margin: 50px 15px;
+        padding: 25px;
+    }
+    .login-container::after {
+        font-size: 50px;
+    }
+}
+</style>
+
+<div class="login-container">
+    <h2>OliveMart Login</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="input-group">
+            <i class="fa fa-user"></i>
+            {{ form.username(class="form-input", placeholder="Username") }}
+        </div>
+
+        <div class="input-group">
+            <i class="fa fa-lock"></i>
+            {{ form.password(class="form-input", placeholder="Password") }}
+        </div>
+
+        {{ form.submit(class="btn") }}
+    </form>
+
+    <div class="login-footer">
+        Don't have an account? <a href="{{ url_for('register') }}">Register here</a>
+    </div>
+</div>
+
+{% endblock %}

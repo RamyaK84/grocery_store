@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Your Cart{% endblock %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 30px auto; padding: 20px; background: #f7f7f7; border-radius: 10px;">
+    <h2 style="text-align:center; color:#2c3e50;">Your Cart 🛒</h2>
+
+    {% if products %}
+    <table style="width:100%; border-collapse: collapse; margin-top:20px;">
+        <thead>
+            <tr style="background:#2c3e50; color:white; text-align:left;">
+                <th style="padding:12px;">Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr style="border-bottom:1px solid #ddd;">
+                <td style="padding:12px; display:flex; align-items:center;">
+                    {% if product.image %}
+                        <img src="{{ url_for('static', filename='uploads/' ~ product.image) }}" alt="{{ product.name }}" style="width:50px; height:50px; margin-right:10px; border-radius:5px;">
+                    {% endif %}
+                    {{ product.name }}
+                </td>
+                <td>₹ {{ product.price }}</td>
+                <td>
+                    <form action="{{ url_for('update_cart', product_id=product.id) }}" method="POST" style="display:flex; align-items:center;">
+                        <input type="number" name="quantity" value="{{ product.quantity }}" min="1" style="width:60px; padding:5px; border-radius:5px; border:1px solid #bdc3c7;">
+                        <button type="submit" style="margin-left:5px; padding:5px 10px; background:#f39c12; border:none; color:white; border-radius:5px; cursor:pointer;">Update</button>
+                    </form>
+                </td>
+                <td>₹ {{ product.subtotal }}</td>
+                <td>
+                    <a href="{{ url_for('remove_from_cart', product_id=product.id) }}" style="color:white; background:#e74c3c; padding:5px 10px; border-radius:5px; text-decoration:none;">Remove</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3 style="text-align:right; margin-top:20px; color:#2c3e50;">Total: ₹ {{ total }}</h3>
+    <div style="text-align:right; margin-top:10px;">
+        <a href="{{ url_for('checkout') }}" style="background:#27ae60; color:white; padding:10px 20px; border-radius:5px; text-decoration:none;">Checkout</a>
+    </div>
+
+    {% else %}
+    <p style="text-align:center; font-size:1.2em; color:#7f8c8d; margin-top:20px;">Your cart is empty.</p>
+    {% endif %}
+</div>
+{% endblock %}
