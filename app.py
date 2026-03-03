@@ -42,7 +42,6 @@ def admin_required():
     return True
 
 # -------------------- ROUTES --------------------
-
 @app.route("/")
 def index():
     featured_products = Product.query.limit(4).all()
@@ -189,6 +188,7 @@ def add_product():
         return redirect(url_for("admin_dashboard"))
     return render_template("admin/add_product.html", form=form)
 
-# -------------------- RUN --------------------
-if __name__ == "__main__":
-    app.run(debug=True)
+# -------------------- ENTRY POINT --------------------
+# For Gunicorn deployment, just expose `app` (no need to run it here)
+# if __name__ == "__main__":
+#     app.run(debug=True)
